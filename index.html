@@ -1,0 +1,97 @@
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { articles, categories } from "@/data/articles";
+import ArticleCard from "@/components/ArticleCard";
+import AdPlaceholder from "@/components/AdPlaceholder";
+import NewsletterSignup from "@/components/NewsletterSignup";
+import { PageMeta } from "@/components/SchemaMarkup";
+
+const Index = () => {
+  const featuredArticles = articles.slice(0, 6);
+
+  return (
+    <>
+      <PageMeta
+        title="Compare the Best Loan Options in the U.S."
+        description="LoanWiseHub helps Americans compare personal loans, bad credit loans, auto loans, and more. Find the best rates and make informed financial decisions."
+      />
+
+      {/* Hero */}
+      <section className="hero-gradient py-16 md:py-24">
+        <div className="container max-w-4xl mx-auto px-4 text-center">
+          <h1 className="font-heading text-3xl md:text-5xl font-bold text-primary-foreground leading-tight">
+            Compare the Best Loan Options in the U.S.
+          </h1>
+          <p className="text-primary-foreground/80 mt-4 text-lg max-w-2xl mx-auto">
+            Trusted guides, honest comparisons, and expert tips to help you find the right loan — no matter your credit score.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
+            <Button asChild variant="secondary" size="lg">
+              <Link to="/category/personal-loans">Compare Loans</Link>
+            </Button>
+            <Button asChild variant="outline" size="lg" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
+              <Link to="/calculator">Loan Calculator</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <div className="container max-w-6xl mx-auto px-4 py-12">
+        {/* Categories */}
+        <section>
+          <h2 className="font-heading text-2xl font-bold text-foreground">Browse by Category</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+            {categories.map(cat => (
+              <Link
+                key={cat.slug}
+                to={`/category/${cat.slug}`}
+                className="bg-card border border-border rounded-lg p-4 text-center hover:border-primary hover:shadow-sm transition-all"
+              >
+                <span className="text-2xl">{cat.icon}</span>
+                <p className="text-sm font-semibold text-foreground mt-2">{cat.name}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <AdPlaceholder className="mt-10" />
+
+        {/* Featured Articles */}
+        <section className="mt-12">
+          <h2 className="font-heading text-2xl font-bold text-foreground">Latest Guides & Comparisons</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+            {featuredArticles.map(article => (
+              <ArticleCard key={article.slug} article={article} />
+            ))}
+          </div>
+        </section>
+
+        <AdPlaceholder className="mt-10" />
+
+        {/* Newsletter */}
+        <div className="mt-12">
+          <NewsletterSignup />
+        </div>
+
+        {/* Trust section */}
+        <section className="mt-16 text-center">
+          <h2 className="font-heading text-2xl font-bold text-foreground">Why Trust LoanWiseHub?</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+            {[
+              { title: "Unbiased Comparisons", desc: "We research and compare lenders so you don't have to. No hidden agendas." },
+              { title: "Expert-Written Content", desc: "Our guides are written by financial experts and updated regularly." },
+              { title: "Free Forever", desc: "All our tools, guides, and comparisons are 100% free to use." },
+            ].map(item => (
+              <div key={item.title} className="bg-card border border-border rounded-lg p-6">
+                <h3 className="font-heading font-bold text-foreground">{item.title}</h3>
+                <p className="text-sm text-muted-foreground mt-2">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+    </>
+  );
+};
+
+export default Index;
